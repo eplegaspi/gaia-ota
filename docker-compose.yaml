@@ -1,0 +1,46 @@
+version: '3'
+services:
+  airflow:
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags/
+
+  mysql:
+    platform: linux/x86_64
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "admin"
+      MYSQL_USER: "airflow"
+      MYSQL_PASSWORD: "airflow"
+      MYSQL_DATABASE: "airflow"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  minio:
+    platform: linux/x86_64
+    image: bitnami/minio:latest
+    container_name: minio-container
+    environment:
+      - MINIO_ACCESS_KEY=minioaccesskey
+      - MINIO_SECRET_KEY=miniosecretkey
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=admin123456
+      - MINIO_DEFAULT_BUCKETS=nycdatatrip
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-data:/data
+
+
+volumes:
+  minio-data:
+    driver: local

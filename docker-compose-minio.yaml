@@ -5,8 +5,10 @@ services:
     image: bitnami/minio:latest
     container_name: minio-container
     environment:
-      - MINIO_ROOT_USER=cristian
-      - MINIO_ROOT_PASSWORD=your_pasword
+      - MINIO_ACCESS_KEY=minioaccesskey
+      - MINIO_SECRET_KEY=miniosecretkey
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=admin123456
       - MINIO_DEFAULT_BUCKETS=nycdatatrip
     ports:
       - "9000:9000"

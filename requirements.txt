@@ -1,6 +1,4 @@
 pandas
-pyarrow
-fastparquet
 requests
 minio==7.2.5
 mysql-connector-python==8.0.30

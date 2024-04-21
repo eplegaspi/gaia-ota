@@ -41,8 +41,6 @@ services:
     image: metabase/metabase
     ports:
       - "3000:3000"
-
-# Define named volumes
 volumes:
   minio-data:
     driver: local
